@@ -24,11 +24,19 @@ export const useTable = <T,>(props: useTableProps<T>) => {
           <tr key={didx}>
             {props.columns
               .filter((col) => Object.keys(d).includes(col.accessor as string))
-              .map((col, colidx) => (
-                <td key={colidx}>
-                  <col.cell value={d[col.accessor]} />
-                </td>
-              ))}
+              .map((col, colidx) =>
+                col.key ? (
+                  <>
+                    <th key={colidx}>
+                      <col.cell value={d[col.accessor]} />
+                    </th>
+                  </>
+                ) : (
+                  <td key={colidx}>
+                    <col.cell value={d[col.accessor]} />
+                  </td>
+                )
+              )}
           </tr>
         ))}
       </>
