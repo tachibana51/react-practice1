@@ -1,72 +1,53 @@
 import { Button, Input } from "@mui/material";
 import React, { useMemo } from "react";
-import { useTable } from "../../hooks/useTable";
-import { Player } from "../../model/models";
+import {
+  Column,
+  TableCellProps,
+} from "../../components/customTable/customTable";
+import { useTable } from "../../components/customTable/hooks/useTable";
+import { Player } from "../../model/player";
 
-export interface TableCellFCProps<T> {
-  value?: T[keyof T];
-  isEditable?: boolean;
-}
-export type TableCellProps<T> = TableCellFCProps<T>;
-
-export interface Column<T> {
-  label: string;
-  header?: string;
-  accessor: keyof T;
-  key?: keyof T;
-  cell: (props: TableCellProps<T>) => JSX.Element;
-}
-
-const dummy: Player[] = [
-  { id: 1, name: "ff", memo: "" },
-  { id: 2, name: "bb", memo: "f" },
-];
-//export interface TableRow<T> extends Row<T> {}
-
-const MyTableCell: <T>(props: TableCellProps<T>) => JSX.Element = ({
-  ...props
-}) => {
-  //return <TextField defaultValue={`${props.value}`} />;
-  //return <input> {`${props.value}`} </input>;
-  return (
-    <Input
-      type="text"
-      defaultValue={`${props.value}`}
-      disabled={!props.isEditable}
-    />
-  );
+const PlayerInputCell: React.FC<TableCellProps<any>> = ({ ...props }) => {
+  return <Input type="text" value={props.rowData} />;
 };
 
-export const PlayersTable: React.FC<{}> = ({}) => {
+export const PlayersTable: React.FC<{}> = ({ ...props }) => {
+  // prepare data
+  const dummy: Player[] = [
+    { id: 1, name: "ff", memo: "" },
+    { id: 2, name: "bb", memo: "f" },
+  ];
+
+  // prepare columns
   const playersColumns = useMemo<Column<Player>[]>(
     () => [
       {
         label: "名前",
-        cell: (cell: TableCellProps<Player>) => (
-          <MyTableCell<Player> value={cell.value} isEditable={false} />
-        ),
-        accessor: "name",
+        cell: PlayerInputCell,
+        onCellValueAccess: (rowModel: Player) => rowModel.name,
         key: "name",
       },
       {
         label: "memo",
-        cell: (cell: TableCellProps<Player>) => (
-          <MyTableCell<Player> value={cell.value} isEditable={true} />
-        ),
-        accessor: "memo",
+        cell: PlayerInputCell,
+        onCellValueAccess: (rowModel: Player) => rowModel.memo,
+        key: "memo",
       },
     ],
     []
   );
-  const { getDataRows, getHeaderColumns } = useTable({
+
+  // prepare table
+  const { DataRows, HeaderLabels } = useTable<Player>({
     data: dummy,
     columns: playersColumns,
   });
+
   return (
     <React.Fragment>
       <table>
-        <thead>{getHeaderColumns()}</thead>
-        <tbody>{getDataRows()}</tbody>
+        <thead>{HeaderLabels()}</thead>
+        <tbody>{DataRows()}</tbody>
       </table>
       <br />
       <Button variant="outlined">追加</Button>
