@@ -1,4 +1,4 @@
-import { Input } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import React, { useMemo } from "react";
 import { useTable } from "../../hooks/useTable";
 import { Player } from "../../model/models";
@@ -68,6 +68,8 @@ export const PlayersTable: React.FC<{}> = ({}) => {
         <thead>{getHeaderColumns()}</thead>
         <tbody>{getDataRows()}</tbody>
       </table>
+      <br />
+      <Button variant="outlined">追加</Button>
     </React.Fragment>
   );
 };
