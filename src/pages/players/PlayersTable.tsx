@@ -1,4 +1,4 @@
-import { Box, Button, Table, TableBody, TableHead } from "@mui/material";
+import { Box, Button, Input, Table, TableBody, TableHead } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import {
   Column,
@@ -19,7 +19,8 @@ const PlayerInputCell: React.FC<TableCellProps<Player>> = ({ ...props }) => {
     };
     return (
       <Box textAlign="right" padding="1em">
-        <input
+        <Input
+          disableUnderline
           style={{ textAlign: "center", border: "none" }}
           value={props.onAccess(props.rowValue, props.rowKey)}
           onChange={handler}
