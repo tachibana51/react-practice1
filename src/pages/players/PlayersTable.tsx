@@ -23,7 +23,7 @@ const dummy: Player[] = [
 ];
 //export interface TableRow<T> extends Row<T> {}
 
-const TableCell: <T>(props: TableCellProps<T>) => JSX.Element = ({
+const MyTableCell: <T>(props: TableCellProps<T>) => JSX.Element = ({
   ...props
 }) => {
   //return <TextField defaultValue={`${props.value}`} />;
@@ -43,7 +43,7 @@ export const PlayersTable: React.FC<{}> = ({}) => {
       {
         label: "名前",
         cell: (cell: TableCellProps<Player>) => (
-          <TableCell<Player> value={cell.value} isEditable={false} />
+          <MyTableCell<Player> value={cell.value} isEditable={false} />
         ),
         accessor: "name",
         key: "name",
@@ -51,7 +51,7 @@ export const PlayersTable: React.FC<{}> = ({}) => {
       {
         label: "memo",
         cell: (cell: TableCellProps<Player>) => (
-          <TableCell<Player> value={cell.value} isEditable={true} />
+          <MyTableCell<Player> value={cell.value} isEditable={true} />
         ),
         accessor: "memo",
       },
