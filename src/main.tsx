@@ -4,9 +4,10 @@ import "./index.css";
 import { Player } from "./model/player";
 import { PlayersTable } from "./pages/players/PlayersTable";
 const dummy: Player[] = [
-  { id: 1, name: "ff", memo: "" },
-  { id: 2, name: "bb", memo: "f" },
+  { id: 1, name: "yukari", memo: "aaa" },
+  { id: 2, name: "akane", memo: "bbb" },
 ];
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <PlayersTable players={dummy} />

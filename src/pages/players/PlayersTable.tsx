@@ -1,5 +1,6 @@
 import { Box, Button, Input, Table, TableBody, TableHead } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useCallback } from "react";
 import {
   Column,
   TableCellProps,
@@ -39,6 +40,7 @@ export const PlayersTable: React.FC<{ players: Player[] }> = ({ ...props }) => {
   // prepare data
 
   const [players, setPlayers] = useState(props.players);
+  const [idx, setIdx] = useState(props.players.length);
 
   // prepare columns
   const playersColumns = useMemo<Column<Player>[]>(
@@ -67,6 +69,19 @@ export const PlayersTable: React.FC<{ players: Player[] }> = ({ ...props }) => {
     dispacher: setPlayers,
   });
 
+  //Button
+  // TODO SORT CALLBACK
+  const handleAddClick = useCallback(() => {
+    setPlayers([
+      ...players,
+      {
+        id: idx + 1,
+        name: "aoi",
+        memo: "",
+      },
+    ]);
+    setIdx(idx + 1);
+  }, [idx, players]);
   return (
     <React.Fragment>
       <Table sx={{ minWidth: 500 }}>
@@ -74,7 +89,10 @@ export const PlayersTable: React.FC<{ players: Player[] }> = ({ ...props }) => {
         <TableBody>{DataRows()}</TableBody>
       </Table>
       <br />
-      <Button variant="outlined">追加</Button>
+
+      <Button onClick={handleAddClick} variant="outlined">
+        追加
+      </Button>
     </React.Fragment>
   );
 };
